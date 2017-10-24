@@ -1,0 +1,192 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+body{
+	font-family: Helvetica, Arial, Sans-Serif;
+	margin:0;
+	padding:0;
+	color: #222;
+}
+.overlay{
+  position: absolute;
+  top:66px;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.5);
+  display: none;
+}
+.element{
+  border-style: dotted solid;
+  border-color: #FFF;
+  border-radius:50%;
+  position:relative;
+  animation-name: rotationZ;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  /*cubic-bezier(0.89, 0.43, 0.54, 0.59);*/
+}
+.spinner{
+  width: 54px;
+  height: 54px;
+  top:calc(50% - 27px);
+  left: calc(50% - 27px);
+  border-width:3px;
+  border-radius:50%;
+}
+@keyframes rotationZ {
+    0%{
+      -webkit-transform: rotateZ(0deg);
+       transform: rotateZ(0deg);
+
+    }
+    100%{
+      -webkit-transform: rotateZ(360deg);
+       transform: rotateZ(360deg);
+    }
+}
+.title,header, footer{
+	background: #234177;
+	color:#fff;
+	padding:5px;
+}
+header{
+    padding: 10px 25px;
+}
+header h1{
+    font-size: 1.4em;
+    font-weight: bold;
+    display: inline-block;
+    padding:0;
+    margin:9px;
+}
+
+.widthWrap{
+    width: 100%;
+    max-width: 490px;
+    margin: 0 auto;
+}
+
+.wrapper{
+	max-width:500px;
+	padding: 8px 20px;
+	min-height: calc(100% - 116px);
+	margin: 0 auto;
+}
+/*https://stackoverflow.com/questions/2717480/css-selector-for-first-element-with-class*/
+#results > .updateItem {
+    margin: 8px 5px 15px 6px;
+}
+#results > .updateItem ~ .updateItem {
+    margin: 15px 6px;
+}
+.updateItem{
+	border: #e4e4e4 1px solid;
+    overflow: hidden;
+}
+div.status{
+    padding: 0;
+	font-size:14px;
+	margin:5px;
+}
+option{
+	background: #FFF;
+	color: #000;
+}
+a{
+    color: #000;
+}
+.pubDate, .agency{
+	font-size:12px;
+	font-style:italic;
+	color:#666;
+	margin:0 10px;
+}
+.agency{
+    float: right;
+    color: #FFF;
+    margin-top: 4px;
+}
+/*fix the MTA styling...*/
+.TitleDelay, .DateStyle{
+    display: none;
+}
+u, strong{
+    text-decoration: none;
+    font-weight: normal;
+}
+.status p{
+    padding: 0;
+    margin:5px 0;
+}
+.error .title{
+  background: #b92222;
+}
+/************************/
+footer,
+.push {
+	height: 25px;
+}
+p.disclaimer{
+	text-align:center;
+	font-size:11px;
+    margin: 0 auto;
+}
+/*Dropdown courtesy of https://www.w3schools.com/howto/howto_js_dropdown.asp*/
+form{
+  margin:0;
+  display: inline;
+}
+label{ 
+   clip: rect(1px, 1px, 1px, 1px); 
+   height: 1px; 
+   width: 1px; 
+   overflow: hidden; 
+   position: absolute !important;
+}
+select{
+  -webkit-appearance: none;
+  -webkit-border-radius: 0.5em;
+}
+.dropbtn {
+    background-color: #3968bb;
+    color: white;
+    padding:16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    line-height: 1.2em;
+}
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #234177;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: calc(100% - 14px);
+    margin-left: calc(14px / 2);
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.plain-selector::after{
+    content: "";
+      position: absolute;
+      left: 91%;
+      z-index: 2;
+      bottom: 30%;
+      margin-top: -3px;
+      height: 0;
+      width: 0;
+      right: 0;
+      border-top: 6px solid white;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      pointer-events: none;
+}
+.out-selector{
+      position: relative;
+}
