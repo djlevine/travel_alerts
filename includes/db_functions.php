@@ -62,9 +62,9 @@ function getData($agency, $error){
 	if(mysqli_close($conn)) array_push($GLOBALS['debugging'], "Closed SQL connection");
   
 	//Merge the debugging results into the output.
-  	$debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
-  	//Uncomment line to display debugging results
-	$results = array_merge($debugging, $results);
+  $debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
+  //Uncomment line to display debugging results
+	//$results = array_merge($debugging, $results);
 	echo json_encode($results, JSON_FORCE_OBJECT);
 }
        
