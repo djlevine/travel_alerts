@@ -7,7 +7,6 @@ $today= date('M d, Y');
 
 //Get Items from the NJT RSS Feed
 function njtr($abrv,$njtFeed){
-	array_push($GLOBALS['debugging'], "reached $abrv");
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
 	foreach ($njtFeed->channel->item as $element) {
@@ -35,7 +34,6 @@ function njtr($abrv,$njtFeed){
 
 //Get Items from the NJT Light Rail RSS Feed
 function njtlr($abrv,$njtLRFeed){
-	array_push($GLOBALS['debugging'], "reached $abrv");
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
 	foreach ($njtLRFeed->channel->item as $element) {
@@ -61,7 +59,6 @@ function njtlr($abrv,$njtLRFeed){
 
 //Get Items from the PATH RSS Feed
 function path($abrv,$pathFeed){
-	array_push($GLOBALS['debugging'], "reached $abrv");
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
 	foreach ($pathFeed->channel->item as $element) {
@@ -90,7 +87,6 @@ function path($abrv,$pathFeed){
 
 //Get Items from the MTA Metro-North RSS Feed
 function mnr($abrv, $mtaFeed){
-	array_push($GLOBALS['debugging'], "reached $abrv");
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
 	foreach ($mtaFeed->MetroNorth->line as $element) {
@@ -112,7 +108,6 @@ function mnr($abrv, $mtaFeed){
 
 //Get Items from the MTA Long Island Railroad RSS Feed
 function lirr($abrv, $mtaFeed){
-	array_push($GLOBALS['debugging'], "reached $abrv");
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
 	foreach ($mtaFeed->LIRR->line as $element) {
