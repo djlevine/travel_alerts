@@ -1,4 +1,30 @@
 <?php
+
+function TbExists($table){
+  $table = sanitizeSql($table);
+  $sql = "SHOW TABLES LIKE '$table'";
+  $result = db_query($sql, "searching database for table: $table");
+  $table_exists = mysqli_num_rows($result);
+  if(!$table_exists){
+    $sql = array(
+              "CREATE TABLE `$table` (
+              `ID` int(4) NOT NULL AUTO_INCREMENT,
+              `Title` varchar(35) DEFAULT NULL,
+              `Description` varchar(255) DEFAULT NULL,
+              `Link` varchar(255) DEFAULT NULL,
+              `PubDate` varchar(35) DEFAULT NULL,
+              `Agency` varchar(12) DEFAULT NULL,
+              `Abrv` varchar(4) DEFAULT NULL,
+              PRIMARY KEY (`ID`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=latin1;",
+            "ALTER TABLE updated ADD $table int(35);",
+            );
+    foreach ($sql as $query) {
+      db_query($query, "Update SQL tables for new agency");
+    }
+  } else array_push($GLOBALS['debugging'], "table '$table' exists!");
+}
+
 function db_query($query, $debug){
   $conn = db();
   $result = mysqli_query($conn,$query);
@@ -31,8 +57,8 @@ function updateTime($abrv){
   db_query($sql, "update the time record");
 }
 
-function updateRecord($title, $description, $pubDate, $agency, $abrv){
-	$sql = "INSERT INTO $abrv (Title, Description, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$pubDate', '$agency', '$abrv')";
+function updateRecord($title, $description, $link, $pubDate, $agency, $abrv){
+	$sql = "INSERT INTO $abrv (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$link', '$pubDate', '$agency', '$abrv')";
  	db_query($sql, "create the new $agency record in table $abrv");
 }
 
@@ -62,7 +88,7 @@ function getData($agency, $error){
 	//Merge the debugging results into the output.
   $debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
   //Uncomment line to display debugging results
-	//$results = array_merge($debugging, $results);
+	$results = array_merge($debugging, $results);
 	echo json_encode($results, JSON_FORCE_OBJECT);
 }
        

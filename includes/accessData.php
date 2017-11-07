@@ -8,14 +8,17 @@ include_once 'agencyData.php';
 
 $agencyFeeds = array(
     "njtr" => "http://www.njtransit.com/rss/RailAdvisories_feed.xml",
+    "njtb" => "http://www.njtransit.com/rss/BusAdvisories_feed.xml",
     "njtlr" => "http://www.njtransit.com/rss/LightRailAdvisories_feed.xml",
     "path" => "http://rss.paalerts.com/rss.aspx?path",
     "mnr" => "http://web.mta.info/status/serviceStatus.txt",
     "lirr" => "http://web.mta.info/status/serviceStatus.txt",
+    "subway" => "http://web.mta.info/status/serviceStatus.txt"
 );
 
 if (isset($agencies) && $agencies !== null){
 	if(isset($agencyFeeds[$agencies])){
+		TbExists($agencies);
 		isUptoDate($agencies, $agencyFeeds[$agencies]);
 	}else {
       array_push($GLOBALS['debugging'], "Feed not available");

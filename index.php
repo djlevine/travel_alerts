@@ -42,13 +42,14 @@
 		   		for (var i = 0, l = Object.keys(myObj).length; i < l; i++) {
 		   			var title = myObj[i][1];
 		   			var desc = myObj[i][2];
-		   			var pubDate = myObj[i][3];
-		   			var agency = myObj[i][4];
+		   			var link = myObj[i][3];
+		   			var pubDate = myObj[i][4];
+		   			var agency = myObj[i][5];
 		   			var abrv = myObj[i][5];
 
 		   			var newContent = document.createElement('div');
 		   			newContent.className = 'updateItem ' + abrv;
-		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "</div><div class='pubDate'>" + pubDate + "</div>";
+		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br>" + link + "</div><div class='pubDate'>" + pubDate + "</div>";
 		   			document.getElementById('results').appendChild(newContent);
 		   		}
 		  	}
@@ -75,10 +76,12 @@
 				<option value="" selected disabled>Filter By Agency</option>
 				<!-- <option value="all">Show All</option> -->
 				<option value="njtr">NJTransit Rail</option>
+				<option value="njtb">NJTransit Bus</option>
 				<option value="njtlr">NJTransit Light Rail</option>
 				<option value="path">PATH</option>
 				<option value="mnr">MTA Metro-North</option>
 				<option value="lirr">MTA Long Island Railroad</option>
+				<option value="subway">NYCTA Subway</option>
 				<!-- <option value="btt">Bridges and Tunnels</option> -->
 			</select>
 		</form>

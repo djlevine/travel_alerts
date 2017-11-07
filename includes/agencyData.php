@@ -6,10 +6,10 @@ $yesterday = date('M d, Y', time() - 60 * 60 * 24);
 $today= date('M d, Y');
 
 //Get Items from the NJT RSS Feed
-function njtr($abrv,$njtFeed){
+function njtr($abrv,$feedUrl){
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
-	foreach ($njtFeed->channel->item as $element) {
+	foreach ($feedUrl->channel->item as $element) {
 		if (strpos($element->pubDate, $yesterday) !== false || strpos($element->pubDate, $today) !== false) { //If it's published yesterday or today
 			if(strpos($element->description, "train #") !== false || strpos($element->description, "bus") !== false){ //If it contains the words "train #" or "bus"
 				foreach ($items as $value) {
@@ -20,10 +20,11 @@ function njtr($abrv,$njtFeed){
 				if($duplicate !== 1){
 					$title = sanitizeSql(findLine($element->description));
 					$description = sanitizeSql((string)$element->description);
+					$link =  sanitizeSql("<a href='" . (string)$element->link . "'>More Information</a>");
 					$pubDate = sanitizeSql((string)$element->pubDate);
 					$agency = sanitizeSql("NJT Rail");
 					
-					updateRecord($title, $description, $pubDate, $agency, $abrv);
+					updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
 				}
 				$duplicate = 0; // Reset the duplicate flag
 			}
@@ -32,11 +33,41 @@ function njtr($abrv,$njtFeed){
 	updateTime($abrv);
 }
 
-//Get Items from the NJT Light Rail RSS Feed
-function njtlr($abrv,$njtLRFeed){
+//Get Items from the NJT Bus Feed
+function njtb($abrv,$feedUrl){
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
-	foreach ($njtLRFeed->channel->item as $element) {
+	foreach ($feedUrl->channel->item as $element) {
+		//if (strpos($element->pubDate, $yesterday) !== false || strpos($element->pubDate, $today) !== false) {
+			if(strpos($element->description, "Bus Route") !== false || strpos($element->description, "detour") !== false){
+				foreach ($items as $value) {
+					if ((string)$element->description == $value["desc"]){ //Check if the feed is a duplicate
+						$duplicate = 1;
+					}
+				}
+				if($duplicate !== 1){
+					$title = (string)$element->title;
+					$title = substr($title, 0, strpos($title, "-"));
+					$title = sanitizeSql($title);
+					$description = sanitizeSql(strip_tags((string)$element->description));
+					$link =  sanitizeSql("<a href='" . (string)$element->link . "'>More Information</a>");
+					$pubDate = sanitizeSql((string)$element->pubDate);
+					$agency = sanitizeSql("NJT Bus");
+					
+					updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
+				}
+				$duplicate = 0; // Reset the duplicate flag
+			}
+		//}
+	}
+	updateTime($abrv);
+}
+
+//Get Items from the NJT Light Rail RSS Feed
+function njtlr($abrv,$feedUrl){
+	global $yesterday, $today, $items, $duplicate, $n;
+	resetTable($abrv);
+	foreach ($feedUrl->channel->item as $element) {
 		if (strpos($element->pubDate, $yesterday) !== false || strpos($element->pubDate, $today) !== false) {
 			foreach ($items as $value) {
 				if ((string)$element->description == $value["desc"]){
@@ -46,10 +77,11 @@ function njtlr($abrv,$njtLRFeed){
 			if($duplicate !== 1){ //If it's not a duplicate write it to our $items array
 				$title = "NJTransit Light Rail";
 				$description = sanitizeSql((string)$element->description);
+				$link =  sanitizeSql("");
 				$pubDate = sanitizeSql((string)$element->pubDate);
 				$agency = sanitizeSql("NJT Light Rail");
 				
-				updateRecord($title, $description, $pubDate, $agency, $abrv);
+				updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
 			}
 			$duplicate = 0;
 		}
@@ -58,10 +90,10 @@ function njtlr($abrv,$njtLRFeed){
 }
 
 //Get Items from the PATH RSS Feed
-function path($abrv,$pathFeed){
+function path($abrv,$feedUrl){
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
-	foreach ($pathFeed->channel->item as $element) {
+	foreach ($feedUrl->channel->item as $element) {
 		$postDate = date('M d, Y h:i:s A', strtotime($element->pubDate));
 		if (strpos($postDate, $today) !== false) {
 			//if(strpos($element->description, "line") !== false){
@@ -73,10 +105,11 @@ function path($abrv,$pathFeed){
 				if($duplicate !== 1){
 				$title = "PATH Alert";
 				$description = sanitizeSql((string)$element->description);
+				$link =  sanitizeSql("");
 				$pubDate = sanitizeSql($postDate);
 				$agency = sanitizeSql("PATH");
 				
-				updateRecord($title, $description, $pubDate, $agency, $abrv);
+				updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
 				}
 				$duplicate = 0;
 			//}
@@ -86,10 +119,10 @@ function path($abrv,$pathFeed){
 }
 
 //Get Items from the MTA Metro-North RSS Feed
-function mnr($abrv, $mtaFeed){
+function mnr($abrv, $feedUrl){
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
-	foreach ($mtaFeed->MetroNorth->line as $element) {
+	foreach ($feedUrl->MetroNorth->line as $element) {
 		if(strpos($element->name, "Pascack Valley") !== false || strpos($element->name, "Port Jervis") !== false || strpos($element->status, "GOOD SERVICE") !== false){
 				//If it operates west of the Hudson it falls under NJT (contracted as Metro-North)
 				//If it's good service we're not interested for now
@@ -98,25 +131,46 @@ function mnr($abrv, $mtaFeed){
 		else {
 			$title = sanitizeSql((string)$element->name . " Line");
 			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <br>, <a>'));
+			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags((string)$element->Date . (string)$element->Time))));
 			$agency = sanitizeSql("Metro-North");
-			updateRecord($title, $description, $pubDate, $agency, $abrv);
+			updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
 		}
 	}
 	updateTime($abrv);
 }
 
 //Get Items from the MTA Long Island Railroad RSS Feed
-function lirr($abrv, $mtaFeed){
+function lirr($abrv, $feedUrl){
 	global $yesterday, $today, $items, $duplicate, $n;
 	resetTable($abrv);
-	foreach ($mtaFeed->LIRR->line as $element) {
+	foreach ($feedUrl->LIRR->line as $element) {
 		if(strpos($element->status, "GOOD SERVICE") === false){
 			$title = sanitizeSql((string)$element->name . " Line");
 			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <br>, <a>'));
+			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags((string)$element->Date . (string)$element->Time))));
 			$agency = sanitizeSql("Long Island Railroad");
-			updateRecord($title, $description, $pubDate, $agency, $abrv);
+			updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
+		}
+	}
+	updateTime($abrv);
+}
+
+//Get Items from the MTA Long Island Railroad RSS Feed
+function subway($abrv, $feedUrl){
+	global $yesterday, $today, $items, $duplicate, $n;
+	resetTable($abrv);
+	foreach ($feedUrl->subway->line as $element) {
+		if(strpos($element->status, "GOOD SERVICE") === false){
+			$title = sanitizeSql((string)$element->name . " Line");
+			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <span>'));
+			$description = preg_replace('/\s+/', ' ', $description);
+			/* $description = preg_replace('#(<br\s?/?>)+#', '<br>', $description); */
+			$link =  sanitizeSql("");
+			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags((string)$element->Date . (string)$element->Time))));
+			$agency = sanitizeSql("NYCTA Subway");
+			updateRecord($title, $description, $link ,$pubDate, $agency, $abrv);
 		}
 	}
 	updateTime($abrv);
