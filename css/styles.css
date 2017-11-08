@@ -8,10 +8,10 @@ body{
 	padding:0;
 	color: #222;
 }
-.overlay{
+#overlay{
   position: absolute;
-  top:66px;
-  bottom: 16px;
+  top:64px;
+  bottom: 0;
   left: 0;
   right: 0;
   z-index: 999;
@@ -73,7 +73,7 @@ header h1{
 .wrapper{
 	max-width:500px;
 	padding: 8px 20px;
-	min-height: calc(100% - 116px);
+	min-height: calc(100% - 115px);
 	margin: 0 auto;
 }
 /*https://stackoverflow.com/questions/2717480/css-selector-for-first-element-with-class*/
@@ -111,7 +111,7 @@ a{
     margin-top: 4px;
 }
 /*fix the MTA styling...*/
-.TitleDelay,.DateStyle,.TitleServiceChange,.DateStyle,.TitlePlannedWork{
+.TitleDelay,.DateStyle,.TitleServiceChange,.DateStyle,.TitlePlannedWork{/*,.MsoNoSpacing{*/
     display: none;
 }
 u, strong{
@@ -125,10 +125,15 @@ u, strong{
 .error .title{
   background: #b92222;
 }
+/*.status br:first-of-type,
+.status br:last-of-type{
+  display: none;
+}
+*/
 /************************/
 footer,
 .push {
-	height: 25px;
+	height: 26px;
 }
 p.disclaimer{
 	text-align:center;

@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `lirr`;
 CREATE TABLE `lirr` (
   `ID` int(4) NOT NULL AUTO_INCREMENT,
   `Title` varchar(35) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
+  `Description` text(500) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   `PubDate` varchar(35) DEFAULT NULL,
   `Agency` varchar(23) DEFAULT NULL,
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `mnr`;
 CREATE TABLE `mnr` (
   `ID` int(4) NOT NULL AUTO_INCREMENT,
   `Title` varchar(35) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
+  `Description` text(500) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   `PubDate` varchar(35) DEFAULT NULL,
   `Agency` varchar(12) DEFAULT NULL,
@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `njtlr`;
 CREATE TABLE `njtlr` (
   `ID` int(4) NOT NULL AUTO_INCREMENT,
   `Title` varchar(35) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
+  `Description` text(500) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   `PubDate` varchar(35) DEFAULT NULL,
   `Agency` varchar(15) DEFAULT NULL,
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `njtr`;
 CREATE TABLE `njtr` (
   `ID` int(4) NOT NULL AUTO_INCREMENT,
   `Title` varchar(35) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
+  `Description` text(500) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   `PubDate` varchar(35) DEFAULT NULL,
   `Agency` varchar(10) DEFAULT NULL,
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `path`;
 CREATE TABLE `path` (
   `ID` int(4) NOT NULL AUTO_INCREMENT,
   `Title` varchar(35) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
+  `Description` text(500) DEFAULT NULL,
   `Link` varchar(255) DEFAULT NULL,
   `PubDate` varchar(35) DEFAULT NULL,
   `Agency` varchar(5) DEFAULT NULL,

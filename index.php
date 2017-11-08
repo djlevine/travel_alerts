@@ -24,6 +24,7 @@
 	<title>Travel Alerts</title>
 	<script>
 	function getData(strUser) {
+		document.getElementById("overlay").style.display = "block";
 		var e = document.getElementById("agencyDropdown");
 		var value = e.options[e.selectedIndex].value;
 		if(!value)value="";
@@ -48,9 +49,10 @@
 		   			var abrv = myObj[i][5];
 
 		   			var newContent = document.createElement('div');
-		   			newContent.className = 'updateItem ' + abrv;
-		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br>" + link + "</div><div class='pubDate'>" + pubDate + "</div>";
+		   			newContent.className = 'updateItem' + ' ' + abrv; //Leave the space after the classname or they all mush together
+		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br><a href='" + link + "'>More Information</a></div><div class='pubDate'>" + pubDate + "</div>";
 		   			document.getElementById('results').appendChild(newContent);
+		   			document.getElementById("overlay").style.display = "none";
 		   		}
 		  	}
 		};
@@ -65,7 +67,7 @@
 		<h1>Regional Travel Alerts</h1>
 	</div>
 </header>
-<div class="overlay">
+<div id="overlay">
 	<div class="spinner element" id="spinner"></div>
 </div>
 <div class="wrapper">
@@ -81,7 +83,7 @@
 				<option value="path">PATH</option>
 				<option value="mnr">MTA Metro-North</option>
 				<option value="lirr">MTA Long Island Railroad</option>
-				<option value="subway">NYCTA Subway</option>
+				<option value="subway">NYC Subway</option>
 				<!-- <option value="btt">Bridges and Tunnels</option> -->
 			</select>
 		</form>

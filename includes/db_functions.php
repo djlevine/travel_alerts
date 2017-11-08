@@ -10,7 +10,7 @@ function TbExists($table){
               "CREATE TABLE `$table` (
               `ID` int(4) NOT NULL AUTO_INCREMENT,
               `Title` varchar(35) DEFAULT NULL,
-              `Description` varchar(255) DEFAULT NULL,
+              `Description` text(500) DEFAULT NULL,
               `Link` varchar(255) DEFAULT NULL,
               `PubDate` varchar(35) DEFAULT NULL,
               `Agency` varchar(12) DEFAULT NULL,
@@ -88,7 +88,7 @@ function getData($agency, $error){
 	//Merge the debugging results into the output.
   $debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
   //Uncomment line to display debugging results
-	$results = array_merge($debugging, $results);
+	//$results = array_merge($debugging, $results);
 	echo json_encode($results, JSON_FORCE_OBJECT);
 }
        

@@ -20,7 +20,7 @@ function njtr($abrv,$feedUrl){
 				if($duplicate !== 1){
 					$title = sanitizeSql(findLine($element->description));
 					$description = sanitizeSql((string)$element->description);
-					$link =  sanitizeSql("<a href='" . (string)$element->link . "'>More Information</a>");
+					$link =  sanitizeSql((string)$element->link);
 					$pubDate = sanitizeSql((string)$element->pubDate);
 					$agency = sanitizeSql("NJT Rail");
 					
@@ -50,7 +50,7 @@ function njtb($abrv,$feedUrl){
 					$title = substr($title, 0, strpos($title, "-"));
 					$title = sanitizeSql($title);
 					$description = sanitizeSql(strip_tags((string)$element->description));
-					$link =  sanitizeSql("<a href='" . (string)$element->link . "'>More Information</a>");
+					$link =  sanitizeSql((string)$element->link);
 					$pubDate = sanitizeSql((string)$element->pubDate);
 					$agency = sanitizeSql("NJT Bus");
 					
@@ -77,7 +77,7 @@ function njtlr($abrv,$feedUrl){
 			if($duplicate !== 1){ //If it's not a duplicate write it to our $items array
 				$title = "NJTransit Light Rail";
 				$description = sanitizeSql((string)$element->description);
-				$link =  sanitizeSql("");
+				$link =  sanitizeSql((string)$element->link);
 				$pubDate = sanitizeSql((string)$element->pubDate);
 				$agency = sanitizeSql("NJT Light Rail");
 				
@@ -130,7 +130,7 @@ function mnr($abrv, $feedUrl){
 		}
 		else {
 			$title = sanitizeSql((string)$element->name . " Line");
-			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <br>, <a>'));
+			$description = sanitizeSql(strip_tags((string)$element->text, '<br>, <a>'));
 			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags((string)$element->Date . (string)$element->Time))));
 			$agency = sanitizeSql("Metro-North");
@@ -164,9 +164,9 @@ function subway($abrv, $feedUrl){
 	foreach ($feedUrl->subway->line as $element) {
 		if(strpos($element->status, "GOOD SERVICE") === false){
 			$title = sanitizeSql((string)$element->name . " Line");
-			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <span>'));
+			$description = sanitizeSql(strip_tags((string)$element->text, '<p>, <span>, <br>'));
 			$description = preg_replace('/\s+/', ' ', $description);
-			/* $description = preg_replace('#(<br\s?/?>)+#', '<br>', $description); */
+			$description = preg_replace('#(<br\s?/?>)+#', '<br>', $description);
 			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags((string)$element->Date . (string)$element->Time))));
 			$agency = sanitizeSql("NYCTA Subway");
