@@ -6,7 +6,7 @@
 	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="apple-mobile-web-app-title" content="Travel Alerts">
-	<meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width" />
+	<meta name="viewport" content="initial-scale=1, viewport-fit=cover, minimum-scale=1, width=device-width">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<link rel="apple-touch-icon" href="apple-touch-icon.png?m=<?php echo filemtime('apple-touch-icon.png'); ?>" />
