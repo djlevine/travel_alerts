@@ -55,6 +55,11 @@ body{
 }
 header{
     padding: 10px 25px;
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 44px;
 }
 header h1{
     font-size: 1.4em;
@@ -72,7 +77,7 @@ header h1{
 
 .wrapper{
 	max-width:500px;
-	padding: 8px 20px;
+	padding: 71px 20px 8px;
 	min-height: calc(100% - 115px);
 	margin: 0 auto;
 }
@@ -133,7 +138,7 @@ u, strong{
 /************************/
 footer,
 .push {
-	height: 26px;
+	height: 25px;
 }
 p.disclaimer{
 	text-align:center;

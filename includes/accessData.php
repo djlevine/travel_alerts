@@ -1,6 +1,6 @@
 <?php
 $debugging = array();
-$agencies = isset($_GET['q']) ? $_GET['q'] : "none";
+$agency = isset($_GET['q']) ? $_GET['q'] : "none";
 include_once 'db.php';
 include_once 'db_functions.php';
 include_once 'agencyData.php';
@@ -16,10 +16,11 @@ $agencyFeeds = array(
     "subway" => "http://web.mta.info/status/serviceStatus.txt"
 );
 
-if (isset($agencies) && $agencies !== null){
-	if(isset($agencyFeeds[$agencies])){
-		TbExists($agencies);
-		isUptoDate($agencies, $agencyFeeds[$agencies]);
+if (isset($agency) && $agency !== null){
+	if (!function_exists($agency)) echo json_encode(Err('404', $agency), JSON_FORCE_OBJECT);
+	if(isset($agencyFeeds[$agency])){
+		TbExists($agency);
+		isUptoDate($agency, $agencyFeeds[$agency]);
 	}else {
       array_push($GLOBALS['debugging'], "Feed not available");
     }

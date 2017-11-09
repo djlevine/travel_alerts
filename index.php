@@ -38,8 +38,6 @@
 		xhttp.onreadystatechange = function() {
 		  	if (this.readyState == 4 && this.status == 200) {
 		   		var myObj = JSON.parse(this.responseText);
-		   		// document.getElementById("results").innerHTML = this.responseText;
-		   		// alert(Object.keys(myObj).length);
 		   		for (var i = 0, l = Object.keys(myObj).length; i < l; i++) {
 		   			var title = myObj[i][1];
 		   			var desc = myObj[i][2];
@@ -50,7 +48,7 @@
 
 		   			var newContent = document.createElement('div');
 		   			newContent.className = 'updateItem' + ' ' + abrv; //Leave the space after the classname or they all mush together
-		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br><a href='" + link + "' id='infoLink" + i + "'>More Information</a></div><div class='pubDate'>" + pubDate + "</div>";
+		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br><a href='" + link + "' id='infoLink" + i + "' target='_blank'>More Information</a></div><div class='pubDate'>" + pubDate + "</div>";
 		   			document.getElementById('results').appendChild(newContent);
 		   			if(link==""||link==null) document.getElementById("infoLink" + i).style.display = "none";
 		   			document.getElementById("overlay").style.display = "none";
@@ -92,7 +90,7 @@
 	<div id="results"></div>
 
 
-<!--<div class="push"></div>-->
+<div class="push"></div>
 </div>
 <footer><p class="widthWrap disclaimer">Alert information provided by the associated agency (all rights reserved).
 	Information parsed and displayed by dlevine.us</p></footer>

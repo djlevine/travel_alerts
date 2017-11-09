@@ -1,5 +1,5 @@
 <?php
-
+/*These things happen if other things are broken*/
 function TbExists($table){
   $table = sanitizeSql($table);
   $sql = "SHOW TABLES LIKE '$table'";
@@ -25,10 +25,19 @@ function TbExists($table){
   } else array_push($GLOBALS['debugging'], "table '$table' exists!");
 }
 
+function Err($error, $agency){
+    global $results;
+    $email = "mailto:dlevine@dlevine.us?subject=Travel Alerts Error!&body=I received an error in Travel Alerts. Error: $agency:$error";
+    if($error>0){
+    $feedErr = array('$error', 'Connection Error!', 'The following information is available, but may not be current.', $email, date('M d, Y h:i:s A',time()), "Error code: $agency:$error", "error");
+    array_unshift($results, $feedErr);
+  }
+  return $results;
+}
+/*This code is the real deal*/
 function db_query($query, $debug){
   $conn = db();
   $result = mysqli_query($conn,$query);
-  //if(!isset($debug){$debug="in the matrix!";}
   
   if(!$result){// !== true) {
     array_push($GLOBALS['debugging'], "Error: $debug");
@@ -57,13 +66,19 @@ function updateTime($abrv){
   db_query($sql, "update the time record");
 }
 
-function updateRecord($title, $description, $link, $pubDate, $agency, $abrv){
-	$sql = "INSERT INTO $abrv (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$link', '$pubDate', '$agency', '$abrv')";
- 	db_query($sql, "create the new $agency record in table $abrv");
+function updateRecord($alertData){
+  $values  = implode(", ", $alertData);
+	$sql = "INSERT INTO njtr (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$values')";
+ 	db_query($sql, "$sql");//"create the new $agency record in table $abrv");
 }
 
+// function updateRecord($title, $description, $link, $pubDate, $agency, $abrv){
+//   $sql = "INSERT INTO $abrv (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$link', '$pubDate', '$agency', '$abrv')";
+//   db_query($sql, "create the new $agency record in table $abrv");
+// }
+
 function getData($agency, $error){
-	$results=array();
+  global $results;
   $conn = db();
  	$sql = "SELECT * FROM $agency";
   $sql = db_query($sql, "retrieve records from server");
@@ -78,11 +93,7 @@ function getData($agency, $error){
 		$noAlerts = array('1', 'There are no alerts at this time', 'There are currently no travel alerts for this agency.', null, date('M d, Y h:i:s A', $lastUpdate[$agency]), '', $agency);
     array_push($results, $noAlerts);
 	}
-
-  if($error==1){
-    $feedErr = array('1', 'Connection Error!', 'The following information is available, but may not be current.', null, date('M d, Y h:i:s A',time()), "Error code: $agency$error", "error");
-    array_unshift($results, $feedErr);
-  }
+  Err($error, $agency);
   mysqli_close($conn);
   
 	//Merge the debugging results into the output.
@@ -91,6 +102,6 @@ function getData($agency, $error){
 	//$results = array_merge($debugging, $results);
 	echo json_encode($results, JSON_FORCE_OBJECT);
 }
-       
+      
 
 ?>
