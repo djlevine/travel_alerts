@@ -75,12 +75,12 @@ function getData($agency, $error){
   if(empty($results)){
     $sql = "SELECT $agency FROM updated where ID='0'";
     $lastUpdate = mysqli_fetch_array(db_query($sql, "get last update time. append to results."));
-		$noAlerts = array('1', 'There are no alerts at this time', 'There are currently no travel alerts for this agency.', date('M d, Y h:i:s A', $lastUpdate[$agency]), '', $agency);
+		$noAlerts = array('1', 'There are no alerts at this time', 'There are currently no travel alerts for this agency.', null, date('M d, Y h:i:s A', $lastUpdate[$agency]), '', $agency);
     array_push($results, $noAlerts);
 	}
 
   if($error==1){
-    $feedErr = array('1', 'Connection Error!', 'The following information is available, but may not be current.', date('M d, Y h:i:s A',time()), "Error code: $agency$error", "error");
+    $feedErr = array('1', 'Connection Error!', 'The following information is available, but may not be current.', null, date('M d, Y h:i:s A',time()), "Error code: $agency$error", "error");
     array_unshift($results, $feedErr);
   }
   mysqli_close($conn);
