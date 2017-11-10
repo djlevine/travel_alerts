@@ -18,16 +18,14 @@ function njtr($abrv,$feedUrl){
 					}
 				}
 				if($duplicate !== 1){
-
-					// if($duplicate !== 1){
-					// 	$alertData = array(
-					// 		'title' => sanitizeSql(findLine($element->description)),
-					// 		'description' => sanitizeSql($element->description),
-					// 		'link' => sanitizeSql($element->link),
-					// 		'pubDate' => sanitizeSql($element->pubDate),
-					// 		'agency' => sanitizeSql("NJT Rail"),
-					// 	);
-					// 	updateRecord($alertData);
+					// $alertData = array(
+					// 	'title' => sanitizeSql(findLine($element->description)),
+					// 	'description' => sanitizeSql($element->description),
+					// 	'link' => sanitizeSql($element->link),
+					// 	'pubDate' => sanitizeSql($element->pubDate),
+					// 	'agency' => sanitizeSql("NJT Rail")
+					// );
+					// updateRecord($alertData);
 
 					$title = sanitizeSql(findLine($element->description));
 					$description = sanitizeSql($element->description);

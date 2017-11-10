@@ -66,16 +66,22 @@ function updateTime($abrv){
   db_query($sql, "update the time record");
 }
 
-function updateRecord($alertData){
-  $values  = implode(", ", $alertData);
-	$sql = "INSERT INTO njtr (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$values')";
- 	db_query($sql, "$sql");//"create the new $agency record in table $abrv");
-}
+// function updateRecord($alertData){
+//  foreach ($alertData as $key => $value) {
+//     sanitizeSql($value);
+//     $alertData[$key] = "'$value'";
+//   }
+//   $values  = implode(", ", $alertData);
 
-// function updateRecord($title, $description, $link, $pubDate, $agency, $abrv){
-//   $sql = "INSERT INTO $abrv (Title, Description, link, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$link', '$pubDate', '$agency', '$abrv')";
-//   db_query($sql, "create the new $agency record in table $abrv");
+// 	$sql = "INSERT INTO njtb (Title, Description, Link, PubDate, Agency, Abrv) VALUES ($values)";
+//   echo "$sql";exit();
+//  	db_query($sql, "$sql");//"create the new $agency record in table $abrv");
 // }
+
+function updateRecord($title, $description, $link, $pubDate, $agency, $abrv){
+  $sql = "INSERT INTO $abrv (Title, Description, Link, PubDate, Agency, Abrv) VALUES ('$title', '$description', '$link', '$pubDate', '$agency', '$abrv')";
+  db_query($sql, "create the new $agency record in table $abrv");
+}
 
 function getData($agency, $error){
   global $results;
