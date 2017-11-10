@@ -51,7 +51,9 @@ body{
 .title,header, footer{
 	background: #234177;
 	color:#fff;
-	padding:5px;
+}
+.title{
+  padding:5px;
 }
 header{
     padding: 10px 25px;
@@ -78,7 +80,7 @@ header h1{
 .wrapper{
 	max-width:500px;
 	padding: 71px 20px 8px;
-	min-height: calc(100% - 115px);
+	min-height: calc(100% - 124px);
 	margin: 0 auto;
 }
 /*https://stackoverflow.com/questions/2717480/css-selector-for-first-element-with-class*/
@@ -139,6 +141,9 @@ u, strong{
 footer,
 .push {
 	height: 25px;
+}
+footer{
+  padding: 10px 25px;
 }
 p.disclaimer{
 	text-align:center;
