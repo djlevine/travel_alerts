@@ -13,12 +13,28 @@ function TbExists($table){
               `Description` text(500) DEFAULT NULL,
               `Link` varchar(255) DEFAULT NULL,
               `PubDate` varchar(35) DEFAULT NULL,
-              `Agency` varchar(12) DEFAULT NULL,
+              `Agency` varchar(20) DEFAULT NULL,
               `Abrv` varchar(4) DEFAULT NULL,
               PRIMARY KEY (`ID`)
             ) ENGINE=MyISAM DEFAULT CHARSET=latin1;",
-            "ALTER TABLE updated ADD $table int(35);",
+            "ALTER TABLE updated ADD $table int(35);"
             );
+    $sqlUpdated = db_query("SHOW TABLES LIKE updated", "no updates table. Creating.");
+    if(!mysqli_num_rows($sqlUpdated)){
+    	array_unshift($sql, 
+    		"CREATE TABLE `updated` (
+			  	`ID` int(11) NOT NULL,
+			  	`njtr` int(35) DEFAULT NULL,
+    			`njtlr` int(35) DEFAULT NULL,
+		  		`path` int(35) DEFAULT NULL,
+		  		`btt` int(35) DEFAULT NULL,
+		  		`mnr` int(35) DEFAULT NULL,
+		  		`lirr` int(35) DEFAULT NULL,
+		  		PRIMARY KEY (`ID`)
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1;", 
+			"INSERT INTO updated (ID) VALUES ('0');"
+		);
+    }
     foreach ($sql as $query) {
       db_query($query, "Update SQL tables for new agency");
     }
@@ -103,8 +119,8 @@ function getData($agency, $error){
   mysqli_close($conn);
   
 	//Merge the debugging results into the output.
-  $debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
-  //Uncomment line to display debugging results
+  	$debugging = array(0 => array('1', 'Debugging Data', implode("<br>", $GLOBALS['debugging']), date('M d, Y h:i:s A',time()), 'dlevine.us', 'None'));
+  	//Uncomment line to display debugging results
 	//$results = array_merge($debugging, $results);
 	echo json_encode($results, JSON_FORCE_OBJECT);
 }
