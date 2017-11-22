@@ -46,11 +46,14 @@
 		   			var agency = myObj[i][5];
 		   			var abrv = myObj[i][5];
 
+		   			if(link == "" || link == null){}
+		   			else{link = "<a href='" + link + "' id='infoLink' target='_blank'>More Information</a>";}
+
 		   			var newContent = document.createElement('div');
 		   			newContent.className = 'updateItem' + ' ' + abrv; //Leave the space after the classname or they all mush together
-		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "&nbsp;</span></div><div class='status'>" + desc + "<br><a href='" + link + "' id='infoLink" + i + "' target='_blank'>More Information</a></div><div class='pubDate'>" + pubDate + "</div>";
+		   			newContent.innerHTML = "<div class='title'>" + title + "<span class='agency'>" + agency + "</span></div><div class='status'>" + desc +"<br>" + 
+					link + "</div><div class='pubDate'>" + pubDate + "</div>";
 		   			document.getElementById('results').appendChild(newContent);
-		   			if(link==""||link==null) document.getElementById("infoLink" + i).style.display = "none";
 		   			document.getElementById("overlay").style.display = "none";
 		   		}
 		  	}

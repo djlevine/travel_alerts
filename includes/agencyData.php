@@ -156,7 +156,7 @@ function lirr($abrv, $feedUrl){
 	foreach ($feedUrl->LIRR->line as $element) {
 		if(strpos($element->status, "GOOD SERVICE") === false){
 			$title = sanitizeSql($element->name . " Line");
-			$description = sanitizeSql(strip_tags($element->text, '<p>, <br>, <a>'));
+			$description = sanitizeSql(strip_tags($element->text, '<p>, <a>'));
 			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags($element->Date . $element->Time))));
 			$agency = sanitizeSql("Long Island Railroad");
@@ -175,7 +175,8 @@ function subway($abrv, $feedUrl){
 			$title = sanitizeSql($element->name . " Line");
 			$description = sanitizeSql(strip_tags($element->text, '<p>, <span>, <br>'));
 			$description = preg_replace('/\s+/', ' ', $description);
-			$description = preg_replace('#(<br\s?/?>)+#', '<br>', $description);
+			
+			$description = preg_replace("/<br/>?<br/>|<br/>?\R<br/>|(<br/> <br/>)/", " ", $description);
 			$link =  sanitizeSql("");
 			$pubDate = sanitizeSql(date('M d, Y h:i:s A', strtotime(strip_tags($element->Date . $element->Time))));
 			$agency = sanitizeSql("NYCTA Subway");
