@@ -8,12 +8,14 @@ include_once 'agencyData.php';
 
 $agencyFeeds = array(
     "njtr" => "http://www.njtransit.com/rss/RailAdvisories_feed.xml",
-    "njtb" => "http://www.njtransit.com/rss/BusAdvisories_feed.xml",
     "njtlr" => "http://www.njtransit.com/rss/LightRailAdvisories_feed.xml",
+    "njtb" => "http://www.njtransit.com/rss/BusAdvisories_feed.xml",
+    "pabt" => "http://rss.paalerts.com/rss.aspx?BUS",
     "path" => "http://rss.paalerts.com/rss.aspx?path",
     "mnr" => "http://web.mta.info/status/serviceStatus.txt",
     "lirr" => "http://web.mta.info/status/serviceStatus.txt",
-    "subway" => "http://web.mta.info/status/serviceStatus.txt"
+    "subway" => "http://web.mta.info/status/serviceStatus.txt",
+    "septa" => "http://www3.septa.org/api/Alerts/get_alert_data.php?req1=all" //Septa info comes in JSON
 );
 
 if (isset($agency) && $agency !== null){
@@ -39,7 +41,7 @@ function isUptoDate($agency, $agencyFeed){
 	}
 	
 	if ($cTime <= $pTime) {
-    //if ($pTime == $pTime) {//For Debugging
+    // if ($pTime == $pTime) {//For Debugging
 		$header_response = get_headers($agencyFeed, 1);
 		//Check if the feed exists
 		if (strpos( $header_response[0], "200") == true ){
